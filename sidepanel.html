@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>ایرانسل‌یار | داشبورد سایدبار</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <img class="brand-mark" src="images/Logo.svg" alt="نشان مستقل ایرانسل‌یار">
+      <div>
+        <h1>ایرانسل‌یار</h1>
+        <p>مدیریت حساب و بسته‌های اینترنت</p>
+      </div>
+      <button id="refresh" class="icon-button" type="button" title="به‌روزرسانی" aria-label="به‌روزرسانی">↻</button>
+    </header>
+
+    <section id="status" class="status" role="status">در حال بررسی نشست ایرانسل…</section>
+
+    <section id="dashboard" class="hidden">
+      <article class="balance-card">
+       <button id="balance-history-toggle" class="balance-history-toggle" type="button" aria-expanded="false" aria-label="نمایش نمودار تاریخچه شارژ" title="تاریخچه تغییر شارژ"><span></span></button>
+       <div id="balance-sparkline-panel" class="balance-sparkline-panel" hidden>
+         <div class="sparkline-heading"><strong>روند شارژ اصلی</strong><span id="balance-history-range">تاریخچه روزانه</span></div>
+         <svg id="balance-sparkline" viewBox="0 0 280 58" role="img" aria-label="نمودار تغییرات شارژ اصلی"></svg>
+         <div class="sparkline-footer"><span id="balance-history-start">—</span><strong id="balance-history-current">—</strong><span id="balance-history-end">امروز</span></div>
+       </div>
+       <div>
+        <span class="eyebrow">مانده شارژ اصلی</span>
+        <div class="amount"><strong id="balance">—</strong><span>تومان</span></div>
+        <div class="muted balance-refresh-note" id="balance-note">
+          <span>آخرین دریافت</span>
+          <strong id="updated-at">—</strong>
+        </div>
+        </div>
+          <img class="balance-sim-icon" src="images/Balance-SIM.png" alt="نمایه سیم‌کارت" loading="lazy">
+      </article>
+
+      <article class="package-card" aria-label="بسته‌های اینترنت فعال">
+        <div class="package-carousel-heading">
+          <span class="eyebrow">بسته‌های اینترنت فعال</span>
+          <span id="package-counter" class="package-counter">۰ از ۰</span>
+        </div>
+        <div id="package-viewport" class="package-viewport">
+          <div id="package-track" class="package-track">
+            <section class="package-slide" aria-label="نمونه بسته">
+              <div class="package-heading">
+                <div class="package-title-block">
+                  <span class="eyebrow">بسته فعال</span>
+                  <h2 class="package-name">—</h2>
+                  <span class="active-package-unit-price">هزینه هر گیگ: —</span>
+                </div>
+                <div class="package-actions">
+                  <span class="pill package-state">فعال</span>
+                  <button class="package-pin-button" type="button" aria-pressed="false" aria-label="نمایش این بسته در اولویت اول" title="نمایش در اولویت اول">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 3h8l-1 5 3 3v2h-5v7l-1 1-1-1v-7H6v-2l3-3-1-5Z"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="data-row">
+                <div><strong class="remaining">—</strong><span>مانده</span></div>
+                <div class="align-left"><strong class="total">—</strong><span>حجم اولیه</span></div>
+              </div>
+              <div class="progress"><div class="progress-bar"></div></div>
+              <div class="progress-labels"><span class="used-percent">—</span><span class="expiry">—</span></div>
+            </section>
+          </div>
+        </div>
+        <div class="package-carousel-controls">
+          <button id="package-prev" class="carousel-button" type="button" aria-label="بسته قبلی">‹</button>
+          <div id="package-dots" class="package-dots" aria-label="انتخاب بسته"></div>
+          <button id="package-next" class="carousel-button" type="button" aria-label="بسته بعدی">›</button>
+        </div>
+      </article>
+
+
+      <details class="accordion-section recommendation-section">
+        <summary><span class="accordion-title">پیشنهاد و مقایسه بسته‌ها</span><span class="accordion-meta">بررسی قیمت هر گیگابایت</span></summary>
+      <article id="best-offer-card" class="best-offer-card">
+        <div class="best-offer-top">
+          <span class="eyebrow">به‌صرفه‌ترین بسته اینترنت</span>
+          <span id="best-offer-kind" class="best-tag">بسته عادی</span>
+        </div>
+        <div id="best-offer-viewport" class="best-offer-viewport">
+          <div id="best-offer-track" class="best-offer-track">
+            <section class="best-offer-slide">
+              <h2 id="best-offer-name">در حال بررسی بسته‌ها…</h2>
+              <p id="best-offer-validity" class="subnote best-offer-validity">مدت اعتبار بسته</p>
+              <div class="best-offer-metrics">
+                <div><strong id="best-offer-price">—</strong><span>قیمت بسته (تومان)</span></div>
+                <div><strong id="best-offer-volume">—</strong><span>حجم بسته</span></div>
+                <div><strong id="best-offer-unit-price">—</strong><span>تومان به‌ازای هر گیگابایت</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="package-carousel-controls best-offer-controls">
+          <button id="best-offer-prev" class="carousel-button" type="button" aria-label="بسته قبلی">‹</button>
+          <div id="best-offer-dots" class="package-dots" aria-label="انتخاب نوع بسته"></div>
+          <button id="best-offer-next" class="carousel-button" type="button" aria-label="بسته بعدی">›</button>
+        </div>
+      </article>
+      </details>
+
+      <details class="accordion-section">
+        <summary><span class="accordion-title">تحلیل مصرف و تاریخچه قیمت</span><span class="accordion-meta">روند مصرف، CSV و تغییرات قیمت</span></summary>
+      <article class="insights-card">
+        <div class="section-heading"><span class="eyebrow">تحلیل مصرف</span><span id="usage-confidence" class="small-tag">در حال محاسبه</span></div>
+        <div id="usage-breakdown" class="usage-breakdown" aria-live="polite">
+          <p class="subnote">برای هر نوع بسته به‌صورت مستقل نمونه‌برداری می‌شود.</p>
+        </div>
+        <p id="usage-explanation" class="subnote">ماندهٔ بسته‌های عادی و شبانه با یکدیگر جمع نمی‌شود؛ روند هر کدام فقط در ساعات مجاز همان بسته برآورد می‌شود.</p>
+        <div class="utility-actions"><button id="export-history" class="secondary">خروجی تاریخچه (CSV)</button><span id="export-status" class="subnote" aria-live="polite"></span></div>
+      </article>
+
+      <article class="insights-card">
+        <div class="section-heading"><span class="eyebrow">تغییرات قیمت بسته‌ها</span><span id="catalog-history-count" class="small-tag">۰ نمونه</span></div>
+        <div id="catalog-trend" class="subnote">با ذخیره‌شدن چند نمونه از کاتالوگ، روند قیمت نمایش داده می‌شود.</div>
+      </article>
+      <div class="activity-heatmap-wrap" aria-label="تقویم شمسی فعالیت مصرف و تغییرات قیمت">
+        <div class="activity-heatmap-heading"><span>تقویم فعالیت</span><span id="activity-range-label">شش ماه اخیر</span></div>
+        <div id="activity-heatmap" class="activity-heatmap" role="img" aria-label="نمودار روزانه تحلیل مصرف و تغییر قیمت بسته‌ها"></div>
+        <div class="activity-heatmap-legend">
+          <span>دادهٔ مصرف</span><i class="heat-level-0"></i><i class="heat-level-1"></i><i class="heat-level-2"></i><i class="heat-level-3"></i><i class="heat-level-4"></i>
+          <span class="heat-price-key"><i></i> تغییر قیمت</span>
+        </div>
+      </div>
+      </details>
+
+      <details class="settings-card">
+        <summary><span class="accordion-title">تنظیمات</span><span class="accordion-meta">آستانه‌ها و اعلان‌ها</span></summary>
+        <div class="settings-content">
+        <label><span class="threshold-label-text">هشدار وقتی حجم باقی‌مانده کمتر از <strong id="threshold-label">۲۰٪</strong> شود</span>
+          <input id="low-data-threshold" type="range" min="5" max="50" step="5" value="20">
+        </label>
+        <label>هشدار انقضا از چند روز قبل؟
+          <select id="expiry-threshold">
+            <option value="1">۱ روز</option>
+            <option value="3" selected>۳ روز</option>
+            <option value="5">۵ روز</option>
+            <option value="7">۷ روز</option>
+          </select>
+        </label>
+        <label class="toggle-row"><input id="notifications-enabled" type="checkbox" checked> اعلان‌ها فعال باشند</label>
+        <label class="toggle-row"><input id="remaining-progress" type="checkbox"> نمایش نوار پیشرفت بر اساس حجم باقی‌مانده</label>
+        <label class="toggle-row"><input id="persist-session" type="checkbox"> نگهداری نشست پس از بستن مرورگر (راحت‌تر، با ماندگاری توکن روی دیسک)</label>
+        <p id="session-storage-status" class="subnote" aria-live="polite"></p>
+        <button id="save-settings" class="primary">ذخیره تنظیمات</button>
+        <p id="settings-status" class="subnote" aria-live="polite"></p>
+        <button id="clear-local-data" class="danger-button" type="button">پاک‌کردن نشست و تاریخچه محلی</button>
+        <p id="clear-data-status" class="subnote" aria-live="polite"></p>
+        </div>
+      </details>
+
+      <details class="accordion-section account-section">
+        <summary><span class="accordion-title">اطلاعات حساب و سلامت اتصال</span><span class="accordion-meta">جزئیات حساب و وضعیت API</span></summary>
+      <article class="account-card">
+        <div class="account-heading">
+          <span class="eyebrow">اطلاعات حساب</span>
+          <span id="account-state" class="account-state">—</span>
+        </div>
+        <div class="account-grid">
+          <div class="account-item">
+            <span>نام و نام خانوادگی</span>
+            <strong id="account-name">—</strong>
+          </div>
+          <div class="account-item">
+            <span>نوع حساب</span>
+            <strong id="account-type">—</strong>
+          </div>
+          <div class="account-item">
+            <span>تاریخ فعال‌سازی</span>
+            <strong id="account-activation">—</strong>
+          </div>
+          <div class="account-item">
+            <span>ایمیل</span>
+            <strong id="account-email">—</strong>
+          </div>
+        </div>
+      </article>
+
+        <article class="insights-card">
+        <div class="section-heading"><span class="eyebrow">سلامت اتصال API</span><span id="health-state" class="small-tag">—</span></div>
+        <div class="health-grid">
+          <div><span>حساب</span><strong id="health-account">—</strong></div>
+          <div><span>پروفایل</span><strong id="health-profile">—</strong></div>
+          <div><span>کاتالوگ</span><strong id="health-catalog">—</strong></div>
+          <div><span>آخرین بررسی</span><strong id="health-time">—</strong></div>
+        </div>
+      </article>
+
+      </details>
+
+    </section>
+
+    <section id="login-help" class="hidden login-help">
+      <p>برای دریافت موجودی، ابتدا در سایت رسمی ایرانسل وارد حساب خود شوید و این پنجره را دوباره باز کنید.</p>
+      <button id="open-site" class="primary">باز کردن سایت ایرانسل</button>
+    </section>
+
+    <footer>اطلاعات و تاریخچه روی همین مرورگر می‌مانند و به سرویس ثالث ارسال نمی‌شوند. توکن به‌صورت پیش‌فرض فقط تا پایان نشست مرورگر نگهداری می‌شود؛ ذخیره‌سازی ماندگار اختیاری است. این افزونه مستقل و غیررسمی است.</footer>
+  </main>
+  <script src="core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

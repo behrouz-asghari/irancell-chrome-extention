@@ -1,0 +1,400 @@
+@font-face {
+  font-family: "Vazirmatn-FD-Bold";
+  src: url("./fonts/Vazirmatn-UI-FD-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Irancell Yaar responsive browser side panel */
+html {
+  min-width: 280px;
+  width: 100%;
+  min-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #596575 #202630;
+}
+body {
+  width: auto;
+  min-width: 280px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #596575 #202630;
+}
+body::-webkit-scrollbar,
+html::-webkit-scrollbar { width: 8px; }
+body::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track { background: #202630; }
+body::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb {
+  background: #596575;
+  border: 1px solid #202630;
+  border-radius: 999px;
+}
+body::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover { background: #ffcc00; }
+.app {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 18px 18px 20px;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: -2px 0 18px;
+  padding: 8px 0 10px;
+  background: rgba(16, 19, 24, .96);
+  border-bottom: 1px solid rgba(57, 66, 78, .55);
+  backdrop-filter: blur(10px);
+}
+.brand-mark { width: 58px; height: 38px; flex-basis: 58px; }
+.balance-card, .package-card, .best-offer-card, .insights-card, .settings-card, .account-card {
+  width: 100%;
+  min-width: 0;
+}
+footer { padding: 0 3px 8px; }
+@media (min-width: 480px) {
+  .app { padding-left: 18px; padding-right: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+
+
+/* Compact, expandable information architecture */
+.accordion-section { display:block; margin-top:10px; padding:0; border:1px solid #2b333e; border-radius:14px; background:#151a22; overflow:hidden; }
+.accordion-section > summary { list-style:none; display:flex; align-items:center; gap:10px; min-height:48px; padding:11px 13px; cursor:pointer; user-select:none; background:linear-gradient(110deg,rgba(255,204,0,.045),transparent 65%); }
+.accordion-section > summary::-webkit-details-marker { display:none; }
+.accordion-section > summary::before { content:"+"; display:grid; place-items:center; flex:0 0 23px; width:23px; height:23px; border-radius:8px; color:#ffcc00; background:#242a32; border:1px solid #343d49; font-size:17px; line-height:1; order:2; }
+.accordion-section[open] > summary::before { content:"−"; }
+.accordion-title { font-size:11px; font-weight:800; color:#edf1f5; }
+.accordion-meta { margin-inline-start:auto; color:#8793a2; font-size:9px; line-height:1.5; }
+.accordion-section > .best-offer-card, .accordion-section > .insights-card, .accordion-section > .account-card { margin:0; border:0; border-top:1px solid #272f39; border-radius:0; box-shadow:none; }
+.accordion-section > .insights-card + .insights-card { border-top:1px solid #272f39; }
+.recommendation-section > .best-offer-card, .account-section > .account-card { background:transparent; }
+.settings-card { border:1px solid #2b333e; border-radius:14px; padding:0; overflow:hidden; }
+.settings-card > summary { list-style:none; display:flex; align-items:center; min-height:48px; padding:11px 13px; cursor:pointer; color:#edf1f5; }
+.settings-card > summary::-webkit-details-marker { display:none; }
+.settings-card > summary::before { content:"+"; display:grid; place-items:center; flex:0 0 23px; width:23px; height:23px; margin-inline-end:10px; border-radius:8px; color:#ffcc00; background:#242a32; border:1px solid #343d49; font-size:17px; }
+.settings-card[open] > summary::before { content:"−"; }
+.settings-card > label, .settings-card > p, .settings-card > button { margin-inline:13px; }
+.settings-card > label:first-of-type { margin-top:14px; }
+.settings-card > p:last-child { margin-bottom:13px; }
+.balance-card { gap:12px; }
+/* Balance illustration intentionally inherits popup.css sizing and positioning. */
+@media (max-width:380px) { .accordion-meta { max-width:48%; text-align:left; } .accordion-section > summary { padding-inline:10px; } }
+
+
+/* UI refinement: consistent accordion headers, flat analytics and aligned controls */
+.accordion-section > summary,
+.settings-card > summary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  direction: rtl;
+  text-align: right;
+  min-width: 0;
+}
+.accordion-section > summary::before,
+.settings-card > summary::before {
+  content: "+";
+  order: 0;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  justify-self: auto;
+}
+.accordion-section[open] > summary::before,
+.settings-card[open] > summary::before { content: "-"; }
+.accordion-title { flex: 0 1 auto; min-width: 0; }
+.accordion-meta { flex: 1 1 auto; min-width: 0; margin-inline-start: 0; text-align: left; }
+.settings-card > summary .accordion-title { color: #edf1f5; }
+.settings-card > summary .accordion-meta { color: #8793a2; }
+
+/* Native select arrow is replaced to avoid Chromium's uneven RTL rendering. */
+.settings-card select {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  direction: rtl;
+  text-align: right;
+  padding: 9px 12px 9px 34px;
+  background-color: #101318;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23aeb7c2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
+  background-size: 14px;
+}
+.settings-card label { width: auto; min-width: 0; }
+.settings-card input[type="range"] { display: block; width: 100%; max-width: 100%; min-width: 0; margin-inline: 0; }
+.settings-card > .primary,
+.settings-card > .danger-button,
+.settings-card > button { display: block; width: calc(100% - 26px); max-width: calc(100% - 26px); min-width: 0; box-sizing: border-box; margin-inline: 13px; }
+.settings-card > .primary { margin-top: 14px; }
+.settings-card > .danger-button { margin-top: 10px; }
+.settings-card > label:first-of-type { margin-top: 14px; }
+.settings-card > p { overflow-wrap: anywhere; }
+
+/* Remove the nested-card effect from usage analysis; keep separation by rhythm and dividers. */
+.usage-breakdown { display: block; gap: 0; }
+.usage-bucket,
+.usage-bucket-night {
+  min-width: 0;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.usage-bucket + .usage-bucket { border-top: 1px solid #303945; }
+.usage-bucket-heading { align-items: center; margin-bottom: 10px; }
+.usage-bucket-heading h3 { font-size: 11px; font-weight: 800; color: #ffdb4a; }
+.usage-metric-grid { gap: 12px 10px; }
+.usage-metric strong { font-size: 13px; font-weight: 800; line-height: 1.8; font-variant-numeric: tabular-nums; }
+.usage-bucket-packages { margin-top: 10px; }
+.usage-bucket-note { margin-top: 9px; padding-top: 8px; }
+.insights-card { min-width: 0; }
+.insights-card .utility-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.insights-card .utility-actions button { max-width: 100%; }
+@media (max-width: 380px) {
+  .accordion-section > summary, .settings-card > summary { gap: 8px; padding-inline: 10px; }
+  .accordion-meta { max-width: none; font-size: 9px; }
+  .usage-metric strong { font-size: 12px; }
+}
+
+
+/* Active package priority pin */
+.package-heading > div:first-child { min-width: 0; flex: 1 1 auto; }
+.package-actions { display: flex; align-items: center; justify-content: flex-start; gap: 6px; flex: 0 0 auto; }
+.package-pin-button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 6px;
+  flex: 0 0 28px; border: 1px solid #39424e; border-radius: 9px;
+  color: #9ba8b8; background: #202630; cursor: pointer;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.package-pin-button svg { display: block; width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.package-pin-button:hover { color: #ffcc00; border-color: #76651e; }
+.package-pin-button.is-pinned { color: #151a22; background: #ffcc00; border-color: #ffcc00; }
+.package-pin-button.is-pinned svg { fill: currentColor; stroke: currentColor; }
+.package-pin-button:focus-visible { outline: 2px solid #ffcc00; outline-offset: 2px; }
+
+
+/* Balance refresh metadata and active-package unit price */
+.balance-refresh-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  line-height: 1.65;
+}
+.balance-refresh-note span { color: var(--text-muted, #9da8b6); }
+.balance-refresh-note strong {
+  color: #70d9b2;
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.package-title-block { min-width: 0; }
+.active-package-unit-price {
+  display: inline-block;
+  margin-top: 4px;
+  color: #ffcf25;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+.active-package-unit-price.is-unavailable {
+  color: var(--text-muted, #9da8b6);
+  font-weight: 500;
+}
+.package-heading { align-items: flex-start; }
+
+
+/* Popup/Side Panel visual parity */
+.best-offer-slide h2 {
+  min-height: 0;
+  min-width: 0;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.best-offer-slide {
+  min-width: 0;
+}
+.package-card,
+.balance-card,
+.accordion-section,
+.settings-card,
+.account-card {
+  min-width: 0;
+}
+@media (max-width: 380px) {
+  .app { padding: 14px 12px 18px; }
+  .best-offer-slide h2 { line-height: 1.5; }
+}
+
+
+/* Keep the low-data threshold label on one line; slider remains below it. */
+.settings-card > label:has(#low-data-threshold) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+.settings-card .threshold-label-text {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.settings-card .threshold-label-text strong {
+  display: inline;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+
+/* Side panel header: keep brand group on the right and refresh on the far left. */
+.header {
+  display: flex;
+  flex-direction: row;
+  direction: rtl;
+  align-items: center;
+  gap: 10px;
+}
+.header .brand-mark {
+  order: 0;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+.header > div {
+  order: 1;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-inline-end: auto;
+}
+.header #refresh {
+  order: 2;
+  margin-inline-start: auto;
+  margin-inline-end: 0;
+  flex: 0 0 36px;
+}
+
+/* Match the popup's hand artwork and balance-card composition. */
+.balance-card .balance-sim-icon {
+  position: absolute;
+  left: -26px;
+  bottom: -10px;
+  width: 183px;
+  height: 185px;
+  object-fit: contain;
+  object-position: left bottom;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  z-index: 0;
+  pointer-events: none;
+  rotate: 45deg;
+}
+.balance-card > div {
+  max-width: 76%;
+}
+
+
+/* Interactive SIM artwork: muted by default, vivid on hover/focus. */
+.balance-card .balance-sim-icon {
+  filter: grayscale(1);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: rotate(0deg) scale(1);
+  transform-origin: 35% 65%;
+  transition: filter 220ms ease, transform 220ms ease;
+}
+.balance-card .balance-sim-icon:hover,
+.balance-card .balance-sim-icon:focus-visible {
+  filter: grayscale(0);
+  transform: rotate(-5deg) scale(1.06);
+}
+.balance-card .balance-sim-icon:focus-visible {
+  outline: 2px solid var(--accent, #ffcc00);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .balance-card .balance-sim-icon { transition: none; }
+}
+
+/* Keep account values private until the user hovers their row. */
+.account-item strong {
+  filter: blur(4px);
+  transition: filter 180ms ease;
+  cursor: pointer;
+}
+.account-item:hover strong,
+.account-item:focus-within strong {
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .account-item strong { transition: none; }
+}
+
+
+/* Typography refinement: Persian UI digits with stronger brand and balance hierarchy. */
+h1,
+.amount strong {
+  font-family: "Vazirmatn-FD-Bold", "Vazirmatn", Tahoma, sans-serif !important;
+  font-weight: 800;
+  font-synthesis: weight;
+}
+h1 { letter-spacing: -0.2px; }
+.amount strong { font-variant-numeric: tabular-nums; letter-spacing: -0.35px; }
+
+/* Settings content wrapper mirrors the other accordion sections. */
+.settings-content {
+  border-top: 1px solid #272f39;
+  padding: 0 13px 13px;
+  min-width: 0;
+}
+.settings-content > label,
+.settings-content > p,
+.settings-content > button {
+  margin-inline: 0;
+}
+.settings-content > label:first-child { margin-top: 14px; }
+.settings-content > .primary,
+.settings-content > .danger-button,
+.settings-content > button {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.settings-content > .primary { margin-top: 14px; }
+.settings-content > .danger-button { margin-top: 10px; }
+.settings-content > p { overflow-wrap: anywhere; }
+
+
+/* Keep the clickable corner perfectly square so the triangular marker is not clipped by the card radius. */
+.balance-card { border-top-right-radius: 0 !important; }
+.balance-history-toggle { border-radius: 0 !important; top: 0; right: 0; }
+.balance-history-toggle::before,
+.balance-history-toggle::after { border-top-right-radius: 0; }

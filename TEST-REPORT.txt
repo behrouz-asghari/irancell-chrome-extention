@@ -1,0 +1,87 @@
+ایرانسل‌یار 3.3.0 — گزارش اعتبارسنجی
+تاریخ: 2026-10-11
+
+خلاصه
+- تست‌های خودکار: 47 موفق، 0 ناموفق
+- بررسی syntax جاوااسکریپت: موفق
+- آزمون زنده با حساب واقعی ایرانسل: انجام نشده
+- آزمون دستی در Chrome/Side Panel: انجام نشده
+
+اصلاح اصلی تحلیل مصرف
+- بسته‌های عادی و شبانه در سبدهای مستقل تحلیل می‌شوند.
+- پنجره شبانه مانند 02:00 تا 07:00 بر اساس هم‌پوشانی زمان واقعی در ساعت ایران محاسبه می‌شود.
+- پیش‌بینی کلی بر پایه جمع حجم شبانه و عادی غیرفعال است.
+- فیلد `global_data_remaining` به‌عنوان مانده یک بسته استفاده نمی‌شود، چون ممکن است کلی باشد و اگر روی هر بسته کپی شود باعث مضاعف‌شدن مانده شود.
+- مانده قدیمی‌ای که منبع اختصاصی آن مشخص نیست، در مهاجرت schema 6 نامشخص می‌شود؛ نام و تاریخ بسته‌ها حفظ می‌شوند.
+- اگر API مانده مستقل یا عنوان دارای ساعت قابل تشخیص نداشته باشد، پیش‌بینی متوقف می‌شود و به‌جای عدد ساختگی «نامشخص/داده کافی نیست» نشان داده می‌شود.
+
+نمونه حوزه‌های تحت آزمون
+- successful refresh returns summarized offers and saves local history without exposing the session token
+- 403 does not destroy the stored session and returns a diagnostic HTTP status
+- refresh retries one 429 response and then succeeds
+- clearing local data removes session and history while preserving alert settings
+- 401 invalidates an unusable session when no fresh official-site session is available
+- catalog is cached for 24 hours while account data can refresh
+- stale catalog failures back off for ten minutes instead of repeating on each refresh
+- malformed account fields are rejected instead of silently rendered as empty data
+- an explicit null active_offers field is treated as no packages, not a malformed schema
+- cached dashboard response contains no session and history sent to UI is bounded
+- session mode can be explicitly switched to persistent storage and back
+- a fresh legacy session is migrated from persistent storage to session storage
+- concurrent popup refreshes share one in-flight API request set
+- mixed ordinary/night bundles remain separate in stored usage analysis and low-volume notifications
+- schema migration invalidates unverified legacy package balances but preserves package metadata
+- schema migration preserves package-specific balances already marked as verified
+- insights never expose a legacy aggregate balance as separated package balances before migration
+- parses Persian and Arabic numerals and localized separators
+- interprets timezone-less API date-times as Iran local time
+- normalizes active data packages, clamps remaining volume and preserves unknown values
+- does not infer zero total remaining when one active package has missing remaining-volume fields
+- does not assign a global_data_remaining value to every active package
+- package signature is independent of package list ordering
+- estimates consumption only for a stable package set and increasing time
+- resets forecast after volume increases or package changes
+- detects night package labels including Persian digits and 2-to-7 AM wording
+- extracts nested catalog offers and ranks night/normal independently by price per GiB
+- normalizes unsafe alert settings into bounded defaults
+- classifies authentication, access, throttling and server HTTP status distinctly
+- parses an explicit night window from a Persian package title
+- builds independent usage buckets for ordinary and night bundles
+- calculates normal consumption in non-night hours and night consumption in night windows only
+- does not guess a night schedule from a generic night bundle title
+- counts the number of allowed night windows before package expiry
+- does not attribute a balance drop across the start of a night window to daytime use
+- withholds a schedule-aware forecast until enough eligible-hour samples exist
+- manifest is MV3, versioned, and scoped to the official Irancell origin
+- manifest icon assets exist for every declared size
+- popup references only bundled scripts and styles
+- API requests and injected session capture remain limited to the expected origin
+- all popup JavaScript references point to existing static HTML IDs
+- dynamic carousel clones strip template IDs before insertion
+- session capture executes in the isolated world and does not persist tokens by default
+- dashboard loads a cache first and the service worker bounds history sent to UI
+- dashboard status and new settings fields exist in both views
+- side panel reuses the dashboard scripts and has responsive side-panel styles
+- package carousel does not repeat a global account balance as each package balance
+
+دستورهای اجراشده
+$ npm test
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 563.328019
+
+
+$ npm run check
+> irancell-yaar-extension@3.3.0 check
+> node --check core.js && node --check background.js && node --check popup.js && node --check tests/core.test.cjs && node --check tests/background.test.cjs && node --check tests/extension.test.cjs
+
+محدودیت‌ها
+این تست‌ها منطق داخلی را با fixture/mock بررسی می‌کنند و صحت نام فیلدهای API زنده، واحد حجم و سازگاری آینده API ایرانسل را تأیید نمی‌کنند. بعد از نصب باید روی حساب واقعی بررسی شود.
+
+3.3.17: JavaScript syntax, manifest version, and single-row month-label layout updated; browser visual test not performed.

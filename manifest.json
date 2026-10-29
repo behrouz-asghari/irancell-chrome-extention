@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ایرانسل‌یار",
+  "version": "3.3.21",
+  "description": "مدیریت حساب و بسته‌های فعال ایرانسل، تخمین مصرف، مقایسه بسته‌ها و داشبورد سایدبار",
+  "permissions": [
+    "alarms",
+    "scripting",
+    "storage",
+    "notifications",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://my.irancell.ir/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "ایرانسل‌یار | مدیریت حساب و بسته‌ها",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "minimum_chrome_version": "116",
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}
