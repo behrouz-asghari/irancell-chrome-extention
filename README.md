@@ -11,7 +11,7 @@
   <img alt="Unofficial" src="https://img.shields.io/badge/Irancell-unofficial-lightgrey">
 </p>
 
-<h1 align="center">ایرانسل‌یار - Irancell-yaar</h1>
+<h1 align="center">ایرانسل‌یار | Irancell-yar</h1>
 
 <p align="center">
   داشبورد فارسی و محلیِ حساب و بسته‌های اینترنت ایرانسل، به‌صورت افزونه Chrome / Chromium
